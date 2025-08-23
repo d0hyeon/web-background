@@ -21,7 +21,7 @@ export class WorkerBuilder {
     
     // 클로저를 포함한 완전한 함수 직렬화
     const serializedFunction = serializeFunction(module, context);
-    console.log(serializedFunction)
+    
     const code = `
       self.addEventListener('message', async event => {
         const func = ${serializedFunction};

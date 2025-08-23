@@ -2,12 +2,8 @@
 
 
 export function serializeFunction(func: Function, providedContext?: Record<string, any>): string {
-  const funcStr = func.toString();
-  const contextKey = JSON.stringify(providedContext || {});
-  const cacheKey = `${funcStr}:${contextKey}`;
-  
-  // 캐시 확인
   const context = providedContext || {};
+  
   return createIsolatedFunction(func, context);
 }
 
