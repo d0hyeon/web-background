@@ -2,7 +2,7 @@ import { UtilWorker } from "./modules/UtilWorker";
 import { WorkerBuilder } from "./modules/WorkerBuilder";
 import { workerCleanupRegistry } from "./modules/workerCleanupRegistry";
 
-export type FunctionInBackground<Callback extends (params: any) => any> = (callback: Callback) => Promise<ReturnType<Callback>>;
+export type FunctionInBackground<Callback extends (params: any) => any> = (...params: Parameters<Callback>) => Promise<ReturnType<Callback>>;
 export function background<Payload, ReturnValue>(fn: (payload: Payload) => ReturnValue): FunctionInBackground<typeof fn>;
 export function background<Payload extends any[], ReturnValue = void>(
   fn: (...payloads: Payload) => ReturnValue
