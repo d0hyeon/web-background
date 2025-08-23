@@ -1,4 +1,4 @@
-import { deserializeFunction, extractClosureContext, serializeFunction } from "./serializeFunction";
+import { serializeFunction } from "./serializeFunction";
 
 interface WorkerConstructor<Worker> {
   new(scriptURL: string | URL, options?: WorkerOptions): Worker;
@@ -17,10 +17,10 @@ export class WorkerBuilder {
     Worker: WorkerConstructor<W>,
     { module, context, ...options }: Options
   ) {
-    const finalContext = context || extractClosureContext(module);
+  
     
     // 클로저를 포함한 완전한 함수 직렬화
-    const serializedFunction = serializeFunction(module, finalContext);
+    const serializedFunction = serializeFunction(module, context);
     console.log(serializedFunction)
     const code = `
       self.addEventListener('message', async event => {
