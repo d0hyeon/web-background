@@ -1,7 +1,7 @@
 
 import typescript from 'rollup-plugin-typescript2';
 import terser from '@rollup/plugin-terser';
-
+import strip from '@rollup/plugin-strip';
 
 export default {
   input: 'src/index.ts',
@@ -11,6 +11,10 @@ export default {
   },
   plugins: [
     typescript(),
-    terser()
+    terser(),
+    strip({
+      functions: ['console.log', 'console.warn'], 
+      sourceMap: false
+    })
   ]
 };

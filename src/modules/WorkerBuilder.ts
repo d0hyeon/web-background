@@ -1,3 +1,4 @@
+import { deserializeFunction, extractClosureContext, serializeFunction } from "./serializeFunction";
 
 interface WorkerConstructor<Worker> {
   new(scriptURL: string | URL, options?: WorkerOptions): Worker;
@@ -6,20 +7,28 @@ interface WorkerConstructor<Worker> {
 
 interface Options extends WorkerOptions {
   module: (...args: any[]) => any;
+  context?: Record<string, any>;
 }
+
+
 
 export class WorkerBuilder {
   static fromModule<W extends Worker>(
     Worker: WorkerConstructor<W>,
-    { module, ...options }: Options
+    { module, context, ...options }: Options
   ) {
+    const finalContext = context || extractClosureContext(module);
+    
+    // 클로저를 포함한 완전한 함수 직렬화
+    const serializedFunction = serializeFunction(module, finalContext);
+    console.log(serializedFunction)
     const code = `
-        self.addEventListener('message', async event => {
-          const result = await (${module.toString()})(${module.length > 1 ? '...event.data' : 'event.data'});
-          
-          self.postMessage(result);
-        });
-      `.trim();
+      self.addEventListener('message', async event => {
+        const func = ${serializedFunction};
+        const result = await func(${module.length > 1 ? '...event.data' : 'event.data'});
+        self.postMessage(result);
+      });
+    `.trim();
 
     const blob = new Blob([code]);
     const url = URL.createObjectURL(blob);

@@ -7,7 +7,7 @@
     "Background",
     "Web Background"
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
@@ -24,10 +24,11 @@
     "@babel/preset-env": "^7.23.3",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-strip": "^3.0.4",
     "@rollup/plugin-terser": "^0.4.4",
     "rollup": "^4.4.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "5.2"
   },
-  "dependencies": {}
+  "files": ["dist"]
 }
