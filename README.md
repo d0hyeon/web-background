@@ -1,27 +1,15 @@
-# 🚀 Web Background
+# Web Background
 
 **Simple Web Worker Library - Run complex tasks in the background!**
 
 Web Background is a simple yet powerful library that enables you to execute heavy computations in the background without blocking the main thread in web browsers.
 
-## ✨ Features
+## Features
 
 - 🎯 **Simple API**: Execute workers instantly with a single function
-- 🧠 **Automatic Context Capture**: Automatically detects and transfers external variables
-- 🚀 **High-Performance Caching**: Cache identical functions for faster re-execution
 - 🧹 **Automatic Memory Management**: Auto-cleanup workers and cache on GC
 - 💪 **Full TypeScript Support**: Complete type safety
 - 📦 **Zero Dependencies**: No external dependencies
-
-## 📦 Installation
-
-```bash
-npm install web-background
-# or
-yarn add web-background
-# or
-pnpm add web-background
-```
 
 ## 🚀 Quick Start
 
@@ -44,7 +32,7 @@ console.log(result); // 15
 const multiplier = 10;
 const processWithContext = background(
   (numbers: number[]) => numbers.map((x) => x * multiplier),
-  { multiplier } // Explicit passing when needed
+  { multiplier }, // Explicit passing when needed
 );
 ```
 
@@ -52,7 +40,7 @@ const processWithContext = background(
 
 ```typescript
 // Image data processing
-const processImage = background((imageData: ImageData) => {
+const generateBluredData = background((imageData: ImageData) => {
   const { data, width, height } = imageData;
   const processed = new Uint8ClampedArray(data.length);
 
@@ -67,7 +55,7 @@ const processImage = background((imageData: ImageData) => {
     processed[i + 3] = data[i + 3]; // A
   }
 
-  return new ImageData(processed, width, height);
+  return processed;
 });
 
 // Usage
@@ -75,11 +63,11 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const originalData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-const blurredData = await processImage(originalData);
-ctx.putImageData(blurredData, 0, 0);
+const blurredData = await generateBluredData(originalData);
+ctx.putImageData(new ImageData(blurredData), 0, 0);
 ```
 
-## 🛠️ API Reference
+## API Reference
 
 ### `background<T>(fn: T, context?: Record<string, any>): FunctionInBackground<T>`
 
