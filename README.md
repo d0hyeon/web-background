@@ -28,11 +28,11 @@ const heavyCalculation = background((numbers: number[]) => {
 const result = await heavyCalculation([1, 4, 9, 16, 25]);
 console.log(result); // 15
 
-// When external variables are needed (optional context passing)
+// When external variables are needed (required context passing)
 const multiplier = 10;
 const processWithContext = background(
   (numbers: number[]) => numbers.map((x) => x * multiplier),
-  { multiplier }, // Explicit passing when needed
+  { multiplier },
 );
 ```
 
