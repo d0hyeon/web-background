@@ -7,7 +7,7 @@
     "Background",
     "Web Background"
   ],
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
@@ -30,5 +30,7 @@
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "5.2"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }
